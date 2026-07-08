@@ -1,0 +1,51 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Pipeline de Integración Continua (CI).
+#
+# Este workflow es un ADELANTO del Proyecto 3 (CI/CD). Corre la suite
+# automáticamente en cada push y en cada Pull Request contra main.
+#
+# GitHub ejecuta esto en un runner de Ubuntu limpio: instala dependencias,
+# instala el navegador, corre los tests y publica el reporte HTML como artifact
+# descargable. Si un test falla, el check del PR queda en rojo.
+# ─────────────────────────────────────────────────────────────────────────────
+name: E2E Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Instalar dependencias (reproducible con npm ci)
+        run: npm ci
+
+      - name: Verificar tipos (TypeScript)
+        run: npm run typecheck
+
+      - name: Instalar navegador Chromium con sus dependencias de sistema
+        run: npx playwright install --with-deps chromium
+
+      - name: Ejecutar la suite E2E (Chromium)
+        run: npm run test:chromium
+
+      # Publica el reporte incluso si los tests fallan, para poder diagnosticar.
+      - name: Subir el reporte de Playwright
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
