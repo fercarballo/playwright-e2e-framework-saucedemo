@@ -2,6 +2,8 @@
 
 Framework de automatización de pruebas **end-to-end** para aplicaciones web, construido con **Playwright** y **TypeScript** sobre una arquitectura por capas: **Page Object Model** con componentes reutilizables, fixtures, datos desacoplados y ejecución **cross-browser**.
 
+![CI](https://github.com/fercarballo/playwright-e2e-framework-saucedemo/actions/workflows/ci.yml/badge.svg)
+
 ---
 
 ## Resumen ejecutivo
@@ -108,15 +110,25 @@ BASE_URL=https://staging.ejemplo.com npm test
 
 ---
 
-## Contexto
+## La suite completa
 
-Primero de una serie de proyectos de automatización de calidad que cubren el ciclo completo:
+Este repositorio forma parte de una suite de automatización de calidad que cubre el ciclo de testing de punta a punta, de los fundamentos a las prácticas propias de un rol SDET.
+
+**Fundamentos**
 
 1. **Framework E2E de UI** — este repositorio
-2. [Testing de API (Playwright + Zod)](https://github.com/fercarballo/api-testing-framework-restful-booker)
-3. [Pipeline CI/CD (GitHub Actions)](https://github.com/fercarballo/qa-automation-cicd-pipeline)
-4. [Estabilidad y flakiness](https://github.com/fercarballo/flakiness-hunting-playwright)
-5. [Regresión visual & contract testing](https://github.com/fercarballo/visual-and-contract-testing)
+2. [Testing de API](https://github.com/fercarballo/api-testing-framework-restful-booker) — contract testing con Zod
+3. [Pipeline CI/CD](https://github.com/fercarballo/qa-automation-cicd-pipeline) — GitHub Actions · quality gates
+4. [Estabilidad y flakiness](https://github.com/fercarballo/flakiness-hunting-playwright) — detección y erradicación
+5. [Regresión visual & contract testing](https://github.com/fercarballo/visual-and-contract-testing) — Playwright + Pact
+
+**Avanzado (SDET)**
+
+6. [Performance & load testing](https://github.com/fercarballo/performance-testing-k6) — k6 · thresholds como gate
+7. [Integración con dependencias reales](https://github.com/fercarballo/integration-testing-testcontainers) — Testcontainers · Postgres
+8. [DevSecOps](https://github.com/fercarballo/devsecops-pipeline) — SAST · SCA · DAST en el pipeline
+9. [Tooling interno de QA](https://github.com/fercarballo/qa-insights) — test impact + flaky detection
+10. [Evals de aplicaciones con IA](https://github.com/fercarballo/llm-evals-harness) — LLM testing
 
 ---
 

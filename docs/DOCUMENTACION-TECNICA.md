@@ -119,7 +119,7 @@ Playwright funciona con JavaScript o TypeScript. Elegimos **TypeScript**.
 
 ### Contras
 
-- **Curva de aprendizaje** si venís solo de JS puro.
+- **Curva de adopción inicial** para equipos que provienen de JavaScript puro.
 - Un **paso de compilación**, aunque Playwright lo maneja de forma transparente.
 
 En este proyecto activamos `"strict": true` en `tsconfig.json`, el modo más exigente: nada de tipos implícitos `any`, chequeo de null, etc. Y tenemos `npm run typecheck` que valida todo sin correr los tests.
@@ -714,4 +714,4 @@ Direcciones para extender el proyecto:
 - **Proyecto 4 — Estabilidad y flakiness:** el tema más senior. Crear flakiness a propósito, medirlo y eliminarlo.
 - **Proyecto 5 — Visual regression + contract testing (Pact):** capas avanzadas.
 
-Lo más importante: **este proyecto es tuyo y es real.** Podés explicar cada línea porque la construiste y la entendés. Eso es lo que te posiciona de verdad.
+El valor de esta base no está solo en la cobertura, sino en su **trazabilidad**: cada decisión de diseño está documentada y justificada, de modo que el framework resulta fácil de explicar, auditar, mantener y extender por cualquier integrante del equipo.
