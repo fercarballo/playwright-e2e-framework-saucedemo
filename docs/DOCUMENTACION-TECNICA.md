@@ -1,10 +1,10 @@
-# Guía de Aprendizaje — Framework E2E con Playwright + TypeScript
+# Documentación Técnica — Framework E2E con Playwright + TypeScript
 
-> Este documento explica **qué** construimos, **por qué** tomamos cada decisión, **qué alternativas** existían y los **pros y contras** de cada una. Está pensado para estudiar: leelo de arriba a abajo la primera vez, y después usalo como referencia.
+> Documentación de referencia del diseño, las decisiones técnicas y el funcionamiento del proyecto, incluyendo las alternativas evaluadas con sus ventajas y desventajas.
 
 ## Índice
 
-1. [Cómo usar esta guía](#1-cómo-usar-esta-guía)
+1. [Alcance](#1-alcance)
 2. [Qué es el testing E2E y dónde encaja](#2-qué-es-el-testing-e2e-y-dónde-encaja)
 3. [Por qué Playwright (vs Selenium vs Cypress)](#3-por-qué-playwright-vs-selenium-vs-cypress)
 4. [Por qué TypeScript (vs JavaScript)](#4-por-qué-typescript-vs-javascript)
@@ -24,13 +24,13 @@
 18. [Reporting y trace viewer](#18-reporting-y-trace-viewer)
 19. [Cross-browser](#19-cross-browser)
 20. [CI/CD: el workflow explicado](#20-cicd-el-workflow-explicado)
-21. [Ejercicios para practicar](#21-ejercicios-para-practicar)
+21. [Extensiones sugeridas](#21-extensiones-sugeridas)
 22. [Glosario](#22-glosario)
 23. [Próximos pasos](#23-próximos-pasos)
 
 ---
 
-## 1. Cómo usar esta guía
+## 1. Alcance
 
 Este proyecto es un **framework de automatización E2E**: un conjunto de código y convenciones que nos permite escribir, organizar y ejecutar pruebas automatizadas que manejan un navegador como lo haría un usuario real.
 
@@ -88,7 +88,7 @@ Elegimos **Playwright**. Estas son las tres opciones principales del mercado y p
 | Velocidad | Muy rápida | Rápida | Más lenta |
 | Curva de setup | Baja (todo incluido) | Baja | Alta (armás todo a mano) |
 
-### Cuándo NO usaría cada uno (respuesta típica de entrevista Sr)
+### Cuándo no conviene cada uno
 
 - **Cypress NO**, si necesito flujos que salten entre dominios (ej: login con Google/SSO), múltiples pestañas, o un lenguaje que no sea JS. Su arquitectura de "correr dentro del navegador" lo limita.
 - **Selenium NO**, para un proyecto nuevo sin requisito de compatibilidad legacy: me obliga a construir a mano (esperas, paralelismo, reportes) lo que los otros traen resuelto.
@@ -121,8 +121,6 @@ Playwright funciona con JavaScript o TypeScript. Elegimos **TypeScript**.
 
 - **Curva de aprendizaje** si venís solo de JS puro.
 - Un **paso de compilación**, aunque Playwright lo maneja de forma transparente.
-
-> **Para tu perfil:** venís de full stack en JavaScript, así que el salto a TypeScript es corto y suma muchísimo a tu perfil de automation. Es lo que se pide en casi todas las búsquedas Sr.
 
 En este proyecto activamos `"strict": true` en `tsconfig.json`, el modo más exigente: nada de tipos implícitos `any`, chequeo de null, etc. Y tenemos `npm run typecheck` que valida todo sin correr los tests.
 
@@ -546,8 +544,6 @@ expect(Number((itemTotal + tax).toFixed(2))).toBe(total);
 
 **Detalle técnico — `toFixed(2)`:** en JavaScript (y casi todos los lenguajes), la aritmética de punto flotante tiene imprecisiones: `0.1 + 0.2` da `0.30000000000000004`, no `0.3`. Por eso redondeamos a 2 decimales antes de comparar montos de dinero. Conocer esta trampa es un detalle que distingue a alguien que entiende cómo funciona el lenguaje.
 
-> **Mensaje para la entrevista:** cuando cuentes este proyecto, destacá que tus tests **verifican lógica de negocio, no solo presencia de elementos**. Es exactamente la diferencia entre un test que da falsa tranquilidad y uno que realmente protege.
-
 ---
 
 ## 16. Aislamiento y paralelismo (la raíz del flakiness)
@@ -676,9 +672,9 @@ Los pasos, en un runner de Ubuntu limpio:
 
 ---
 
-## 21. Ejercicios para practicar
+## 21. Extensiones sugeridas
 
-Para aprender de verdad, modificá el proyecto. Ideas, de menor a mayor dificultad:
+Direcciones para extender el proyecto:
 
 1. **Agregá un test:** que el botón "Add to cart" cambie a "Remove" después de agregar un producto.
 2. **Nuevo Page Object:** modelá la página de detalle de un producto (`/inventory-item.html?id=4`) y probá que muestra el nombre y precio correctos.
@@ -711,13 +707,11 @@ Para aprender de verdad, modificá el proyecto. Ideas, de menor a mayor dificult
 
 ## 23. Próximos pasos
 
-Este es el **Proyecto 1** de tu portfolio de QA Automation Sr. Con esta base sólida, los siguientes construyen encima:
+ Con esta base sólida, los siguientes construyen encima:
 
 - **Proyecto 2 — Testing de API:** la capa que falta de la pirámide. Contratos, negativos, encadenamiento, validación de schema. Acá sí veremos "setup por API".
 - **Proyecto 3 — CI/CD completo:** extender este workflow (smoke bloqueante, regresión nightly, matriz, badges, notificaciones).
 - **Proyecto 4 — Estabilidad y flakiness:** el tema más senior. Crear flakiness a propósito, medirlo y eliminarlo.
-- **Proyecto 5 — Visual regression + contract testing (Pact):** capas avanzadas que impresionan en entrevistas.
-
-**Cómo contarlo en una entrevista:** para cada proyecto, usá el formato **problema → decisión → resultado**. Ejemplo con este: *"Construí un framework E2E con Playwright y TypeScript siguiendo POM con componentes y fixtures (decisión de arquitectura); el objetivo era que fuera mantenible y cross-browser (problema); logré 13 tests corriendo en 3 navegadores en segundos, con type-check y CI, y verificación de negocio real en el checkout (resultado)."*
+- **Proyecto 5 — Visual regression + contract testing (Pact):** capas avanzadas.
 
 Lo más importante: **este proyecto es tuyo y es real.** Podés explicar cada línea porque la construiste y la entendés. Eso es lo que te posiciona de verdad.
